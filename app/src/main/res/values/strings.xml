@@ -3,4 +3,7 @@
     <string name="Round">Ronda</string>
     <string name="Comenzar">Inicar</string>
     <string name="Rojo">Rojo</string>
+    <string name="Amarillo">Amarillo</string>
+    <string name="Verde">Verde</string>
+    <string name="Azul">Azul</string>
 </resources>
