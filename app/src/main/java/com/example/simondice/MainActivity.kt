@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity() {
     val start :Button = findViewById(R.id.Comenzar)
 
     fun Comenzar(){
+        GenerarSecuencia()
         if(resultado=="Acierto"){
             GenerarSecuencia()
         }
@@ -93,5 +94,6 @@ class MainActivity : AppCompatActivity() {
         start.setBackgroundColor(R.id.Comenzar)
     }
 
+    //En la función de selección del usuario habilitar la pulsación de los colores
 
 }

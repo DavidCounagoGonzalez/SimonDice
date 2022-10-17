@@ -26,6 +26,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:background="#ff0000"
+        android:enabled="false"
         android:text="@string/Rojo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline" />
@@ -37,6 +38,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:background="#00ff00"
+        android:enabled="false"
         android:text="@string/Verde"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -48,6 +50,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:background="#fff000"
+        android:enabled="false"
         android:text="@string/Amarillo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline" />
@@ -60,6 +63,7 @@
         android:layout_marginBottom="8dp"
         android:background="#000fff"
         android:text="@string/Azul"
+        android:enabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -71,6 +75,7 @@
         android:layout_marginTop="292dp"
         android:background="@drawable/bordes_redondos"
         android:text="@string/Comenzar"
+        android:enabled="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline" />
 
