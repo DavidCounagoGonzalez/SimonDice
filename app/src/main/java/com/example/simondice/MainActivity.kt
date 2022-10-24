@@ -1,8 +1,9 @@
 package com.example.simondice
 
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import kotlinx.coroutines.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -11,7 +12,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        comenzar()
+        start.setOnClickListener { generarSecuencia() }
     }
 
     var resultado : String = "Acierto"
@@ -19,18 +20,7 @@ class MainActivity : AppCompatActivity() {
     var select = ArrayList<String>()
     val start :Button = findViewById(R.id.Comenzar)
 
-
-    fun comenzar(){
-        start.setOnClickListener { generarSecuencia() }
-        /*if(resultado=="Acierto"){
-            GenerarSecuencia()
-        }
-        else{
-         println("Has perdido, la secuencia era " + secuencia + " y tu selección fallaste en " + select + " \n Llegaste a la ronda: " + secuencia.size)
-         secuencia.clear()
-        }*/
-    }
-    //Mëtodo random para la generación de secuencia
+    //Método random para la generación de secuencia
     fun Random.nextInt(range: IntRange): Int {
         return range.start + nextInt(range.last - range.start)
     }
@@ -49,29 +39,27 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun mostrar (){
+        GlobalScope.launch(Dispatchers.Main) {
+            for (i in 0..secuencia.size) {
+                val muestra: String = secuencia[i]
 
-        for (i in 0..secuencia.size){
-            val muestra : String = secuencia[i]
-
-            if (muestra=="Rojo"){
-                start.text=""
-                start.setBackgroundColor(R.id.Rojo)
-            }
-            else if (muestra=="Amarillo"){
-                start.text=""
-                start.setBackgroundColor(R.id.Amarillo)
-            }
-            else if (muestra=="Verde"){
-                start.text=""
-                start.setBackgroundColor(R.id.Verde)
-            }
-            else if (muestra=="Azul"){
-                start.text=""
-                start.setBackgroundColor(R.id.Azul)
-            }
-            else{
-                println("Esto no debería haber pasado")
-                break
+                if (muestra == "Rojo") {
+                    start.text = ""
+                    start.setBackgroundColor(R.id.Rojo)
+                } else if (muestra == "Amarillo") {
+                    start.text = ""
+                    start.setBackgroundColor(R.id.Amarillo)
+                } else if (muestra == "Verde") {
+                    start.text = ""
+                    start.setBackgroundColor(R.id.Verde)
+                } else if (muestra == "Azul") {
+                    start.text = ""
+                    start.setBackgroundColor(R.id.Azul)
+                } else {
+                    println("Esto no debería haber pasado")
+                    break
+                }
+                delay(2000L)
             }
         }
         start.setBackgroundColor(R.id.Comenzar)
