@@ -8,16 +8,15 @@
 
 
     <TextView
-        android:layout_width="48dp"
-        android:layout_height="18dp"
+        android:layout_width="59dp"
+        android:layout_height="20dp"
         android:text="@string/Round"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.11"
+        app:layout_constraintHorizontal_bias="0.386"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.058" />
-
+        app:layout_constraintVertical_bias="0.073" />
 
     <Button
         android:id="@+id/Rojo"
@@ -84,13 +83,22 @@
 
     <TextView
         android:id="@+id/Derrrota"
-        android:layout_width="114dp"
-        android:layout_height="22dp"
+        android:layout_width="215dp"
+        android:layout_height="26dp"
         android:layout_marginTop="16dp"
         android:text=""
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/Numero"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="192dp"
+        android:text="0"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
