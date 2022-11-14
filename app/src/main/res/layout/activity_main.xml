@@ -20,8 +20,8 @@
 
     <Button
         android:id="@+id/Rojo"
-        android:layout_width="187dp"
-        android:layout_height="308dp"
+        android:layout_width="186dp"
+        android:layout_height="250dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:background="#ff0000"
@@ -32,7 +32,7 @@
     <Button
         android:id="@+id/Verde"
         android:layout_width="187dp"
-        android:layout_height="308dp"
+        android:layout_height="250dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:background="#00ff00"
@@ -42,8 +42,8 @@
 
     <Button
         android:id="@+id/Amarillo"
-        android:layout_width="187dp"
-        android:layout_height="308dp"
+        android:layout_width="189dp"
+        android:layout_height="250dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:background="#fff000"
@@ -54,7 +54,7 @@
     <Button
         android:id="@+id/Azul"
         android:layout_width="187dp"
-        android:layout_height="308dp"
+        android:layout_height="250dp"
         android:layout_marginStart="8dp"
         android:layout_marginBottom="8dp"
         android:background="#000fff"
@@ -66,11 +66,11 @@
         android:id="@+id/Comenzar"
         android:layout_width="75dp"
         android:layout_height="69dp"
-        android:layout_marginStart="168dp"
-        android:layout_marginTop="292dp"
+        android:layout_marginStart="156dp"
+        android:layout_marginTop="272dp"
         android:background="@drawable/bordes_redondos"
-        android:text="@string/Comenzar"
         android:enabled="true"
+        android:text="@string/Comenzar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline" />
 
@@ -83,9 +83,9 @@
 
     <TextView
         android:id="@+id/Derrrota"
-        android:layout_width="215dp"
-        android:layout_height="26dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="234dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="4dp"
         android:text=""
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

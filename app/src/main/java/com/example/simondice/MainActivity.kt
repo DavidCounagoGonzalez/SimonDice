@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
-import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
+import androidx.activity.viewModels
+import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -15,10 +15,11 @@ import kotlin.collections.ArrayList
 class MainActivity : AppCompatActivity() {
     var secuencia = ArrayList<String>()
     var select = ArrayList<String>()
-    // var ronda: Int = 0
+    var ronda: Int = 0
     lateinit var lose: TextView
     lateinit var numero: TextView
     lateinit var start :Button
+    val livedata_ronda = MutableLiveData<Int>()
     //Declaración de los Botones de colores
     lateinit var rojo : Button
     lateinit var amarillo : Button
@@ -46,8 +47,9 @@ class MainActivity : AppCompatActivity() {
 
 
     fun generarSecuencia(){
-        //ronda= secuencia.size+1
-        //numero.setText(ronda.toString())
+        ronda= secuencia.size+1
+        numero.setText(ronda.toString())
+        livedata_ronda.setValue(ronda)
         val colores = ArrayList<String>()
         colores.addAll(listOf("Rojo", "Azul", "Verde", "Amarillo"))
         val random = Random()
@@ -57,14 +59,15 @@ class MainActivity : AppCompatActivity() {
         mostrar()
     }
 
-    fun mostrar (){
-        //Por alguna razón no se muestran los fondos en el botón central
-        var waitMuestra : Job? = null
-        waitMuestra = GlobalScope.launch{
+    fun mostrar(){
+        GlobalScope.launch{
             for (i in 0..secuencia.size) {
                 if(i<secuencia.size) {
                 val muestra: String = secuencia[i]
                 Log.d("datos",muestra)
+                    start.text = ""
+                    start.setBackgroundResource(R.color.white)
+                    delay(500L)
                     if (muestra == "Rojo") {
                         start.text = ""
                         start.setBackgroundResource(R.color.Rojo)
@@ -83,42 +86,44 @@ class MainActivity : AppCompatActivity() {
                     start.setBackgroundResource(R.drawable.bordes_redondos)
                     seleccion()
                 }
-               delay(2000L)
+               delay(1000L)
             }
         }
     }
 
 
     fun seleccion(){
+        var contapul = 0
         Log.d("salida","estoy en selección")
-        var espera : Job? = null
-        espera = GlobalScope.launch {
-            for (i in 0.. secuencia.size){
-                if (i<secuencia.size) {
                     start.text="Eligiendo"
                     Log.d("salida","otro")
                     //Según el que presionemos se añadirá a la lista select
                     rojo.setOnClickListener {
                         select.add("Rojo")
+                        contapul= contapul+1
+                        if(contapul==secuencia.size)
+                            comprobar()
                     }
                     amarillo.setOnClickListener {
                         select.add("Amarillo")
+                        contapul= contapul+1
+                        if(contapul==secuencia.size)
+                            comprobar()
                     }
                     verde.setOnClickListener {
                         select.add("Verde")
+                        contapul= contapul+1
+                        if(contapul==secuencia.size)
+                            comprobar()
                     }
                     azul.setOnClickListener {
                         select.add("Azul")
+                        contapul= contapul+1
+                        if(contapul==secuencia.size)
+                            comprobar()
                     }
-                    delay(5000)
-                }
-                else {
-                    comprobar()
-                }
-            //Necesito encontrar una manera de pausar el loop mientras el usuario no haya presionado el boton
-            }
-        }
     }
+
     fun comprobar(){
         println(select)
         Log.d("salida", "estoy aquí¿?")
@@ -143,7 +148,7 @@ class MainActivity : AppCompatActivity() {
             secuencia.clear()
             select.clear()
             lose.setText("HAS PERDIDO!!")
-            delay(5000L)
+            delay(3000L)
             start.text = "Empezar!!"
             lose.setText("Presiona el botón central para \n comenzar de nuevo.")
             start.setBackgroundResource(R.drawable.bordes_redondos)
@@ -154,3 +159,4 @@ class MainActivity : AppCompatActivity() {
 
 
 }
+
