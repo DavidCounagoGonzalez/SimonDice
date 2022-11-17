@@ -6,7 +6,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.viewModels
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import kotlinx.coroutines.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -16,10 +16,11 @@ class MainActivity : AppCompatActivity() {
     var secuencia = ArrayList<String>()
     var select = ArrayList<String>()
     var ronda: Int = 0
+    lateinit var textRec: TextView
     lateinit var lose: TextView
     lateinit var numero: TextView
     lateinit var start :Button
-    val livedata_ronda = MutableLiveData<Int>()
+    val miModelo by viewModels<MyViewModel>()
     //Declaración de los Botones de colores
     lateinit var rojo : Button
     lateinit var amarillo : Button
@@ -32,6 +33,7 @@ class MainActivity : AppCompatActivity() {
         lose= findViewById(R.id.Derrrota)
         numero = findViewById(R.id.Numero)
         start= findViewById(R.id.Comenzar)
+        textRec= findViewById(R.id.Ronda)
         //Declaración de los Botones de colores
         rojo = findViewById(R.id.Rojo)
         amarillo= findViewById(R.id.Amarillo)
@@ -47,15 +49,14 @@ class MainActivity : AppCompatActivity() {
 
 
     fun generarSecuencia(){
+        textRec.text = "Ronda"
         ronda= secuencia.size+1
         numero.setText(ronda.toString())
-        livedata_ronda.setValue(ronda)
         val colores = ArrayList<String>()
         colores.addAll(listOf("Rojo", "Azul", "Verde", "Amarillo"))
         val random = Random()
 
         secuencia.add(colores[random.nextInt(0..4)])
-        println(secuencia)
         mostrar()
     }
 
@@ -100,50 +101,58 @@ class MainActivity : AppCompatActivity() {
                     //Según el que presionemos se añadirá a la lista select
                     rojo.setOnClickListener {
                         select.add("Rojo")
+                        if(secuencia[contapul]!="Rojo"){
+                            restart()
+                        }
                         contapul= contapul+1
                         if(contapul==secuencia.size)
-                            comprobar()
+                            generarSecuencia()
                     }
                     amarillo.setOnClickListener {
                         select.add("Amarillo")
+                        if(secuencia[contapul]!="Amarillo"){
+                            restart()
+                        }
                         contapul= contapul+1
                         if(contapul==secuencia.size)
-                            comprobar()
+                            generarSecuencia()
                     }
                     verde.setOnClickListener {
                         select.add("Verde")
+                        if(secuencia[contapul]!="Verde"){
+                            restart()
+                        }
                         contapul= contapul+1
                         if(contapul==secuencia.size)
-                            comprobar()
+                            generarSecuencia()
                     }
                     azul.setOnClickListener {
                         select.add("Azul")
+                        if(secuencia[contapul]!="Azul"){
+                            restart()
+                        }
                         contapul= contapul+1
                         if(contapul==secuencia.size)
-                            comprobar()
+                            generarSecuencia()
                     }
-    }
-
-    fun comprobar(){
-        println(select)
-        Log.d("salida", "estoy aquí¿?")
-            for (j in 0..secuencia.size) {
-                if(j<secuencia.size) {
-                    if (secuencia[j] != select[j]) {
-                        restart()
-                        break;
-                    }
-                }
-                else{
-                    select.clear()
-                    Log.d("fallo","lo hace")
-                    generarSecuencia()
-                }
-            }
     }
 
     fun restart() {
+
         Log.d("salida", "Se resetea")
+        miModelo.añadirRecord(ronda)
+        Log.d("MVVC", "Actualiza ronda")
+        miModelo.livedata_ronda.observe(
+            this,
+            Observer(
+                fun(nuevaRonda : MutableList<Int>){
+                    var textRandom: TextView = findViewById(R.id.Numero)
+                    textRandom.text = nuevaRonda.toString()
+                    textRec.text = "Record"
+                }
+            )
+        )
+
         GlobalScope.launch(Dispatchers.Main) {
             secuencia.clear()
             select.clear()
@@ -159,4 +168,5 @@ class MainActivity : AppCompatActivity() {
 
 
 }
+
 
