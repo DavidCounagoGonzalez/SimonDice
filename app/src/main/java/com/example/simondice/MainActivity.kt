@@ -138,7 +138,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun restart() {
-
         Log.d("salida", "Se resetea")
         miModelo.añadirRecord(ronda)
         Log.d("MVVC", "Actualiza ronda")
