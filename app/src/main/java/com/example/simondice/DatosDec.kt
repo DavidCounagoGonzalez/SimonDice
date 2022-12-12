@@ -8,7 +8,7 @@ class DatosDec {
     data class Datos(
         @PrimaryKey(autoGenerate = true)val id : Int,
         @ColumnInfo(name = "ronda")val ronda : Int,
-        @ColumnInfo(name = "fecha")val decha : String?
+        //@ColumnInfo(name = "fecha")val decha : String?
 
     )
 
@@ -17,7 +17,10 @@ class DatosDec {
         @Query("SELECT ronda FROM datos where ronda = (SELECT max(ronda) FROM Datos")
         fun getTopRecord() : Int
 
-        @Insert
-        fun insert(dato : Datos)
+        @Query("INSERT INTO datos (ronda) VALUES (0)")
+        fun insertar()
+
+        @Update
+        fun update(record:Datos)
     }
 }
