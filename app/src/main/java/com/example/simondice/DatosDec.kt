@@ -8,19 +8,19 @@ class DatosDec {
     data class Datos(
         @PrimaryKey(autoGenerate = true)val id : Int,
         @ColumnInfo(name = "ronda")val ronda : Int,
-        //@ColumnInfo(name = "fecha")val decha : String?
+        //@ColumnInfo(name = "fecha")val fecha : String?
 
     )
 
     @Dao
     interface RecordDao{
-        @Query("SELECT ronda FROM datos where ronda = (SELECT max(ronda) FROM Datos")
-        fun getTopRecord() : Int
+        @Query("SELECT ronda FROM datos")
+        suspend fun getTopRecord() : Int
 
-        @Query("INSERT INTO datos (ronda) VALUES (0)")
-        fun insertar()
+        @Query("INSERT INTO datos (ronda) VALUES (1,1)")
+        suspend fun insertar()
 
         @Update
-        fun update(record:Datos)
+        suspend fun update(record:Datos)
     }
 }

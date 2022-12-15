@@ -50,24 +50,9 @@ class MainActivity : AppCompatActivity() {
 
 
     fun generarSecuencia(){
-        miModelo.SubirRonda()
-        miModelo.livedata_ronda.observe(
-            this, androidx.lifecycle.Observer(
-                fun(_:Int) {
-                    if (miModelo.livedata_ronda.value != 0)
-                        numero.text = miModelo.livedata_ronda.value.toString()
-                    textRec.text = "Ronda"
-                }
-            )
-        )
-
-        if (miModelo.livedata_ronda.value!! > miModelo.record.value!!){
-            miModelo.actulizar()
-            Toast.makeText(applicationContext, "¡Has establecido un nuevo récord!", Toast.LENGTH_SHORT).show()
-        }
-        /*textRec.text = "Ronda"
+        textRec.text = "Ronda"
         ronda= secuencia.size+1
-        numero.setText(ronda.toString())*/
+        numero.setText(ronda.toString())
         val colores = ArrayList<String>()
         colores.addAll(listOf("Rojo", "Azul", "Verde", "Amarillo"))
         val random = Random()
@@ -78,6 +63,7 @@ class MainActivity : AppCompatActivity() {
 
     fun mostrar(){
         GlobalScope.launch{
+            println(miModelo.record.value)
             for (i in 0..secuencia.size) {
                 if(i<secuencia.size) {
                 val muestra: String = secuencia[i]
@@ -101,6 +87,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 else{
                     start.setBackgroundResource(R.drawable.bordes_redondos)
+                    println(miModelo.record.value)
                     seleccion()
                 }
                delay(1000L)
@@ -122,6 +109,7 @@ class MainActivity : AppCompatActivity() {
                         }
                         contapul= contapul+1
                         if(contapul==secuencia.size)
+                            miModelo.SubirRonda()
                             generarSecuencia()
                     }
                     amarillo.setOnClickListener {
@@ -131,6 +119,7 @@ class MainActivity : AppCompatActivity() {
                         }
                         contapul= contapul+1
                         if(contapul==secuencia.size)
+                            miModelo.SubirRonda()
                             generarSecuencia()
                     }
                     verde.setOnClickListener {
@@ -140,6 +129,7 @@ class MainActivity : AppCompatActivity() {
                         }
                         contapul= contapul+1
                         if(contapul==secuencia.size)
+                            miModelo.SubirRonda()
                             generarSecuencia()
                     }
                     azul.setOnClickListener {
@@ -149,22 +139,19 @@ class MainActivity : AppCompatActivity() {
                         }
                         contapul= contapul+1
                         if(contapul==secuencia.size)
+                            miModelo.SubirRonda()
                             generarSecuencia()
                     }
     }
 
     fun restart() {
         Log.d("salida", "Se resetea")
-        miModelo.ReiniciaRonda()
         Log.d("MVVC", "Actualiza ronda")
-        miModelo.record.observe(
-            this, androidx.lifecycle.Observer(
-                fun(_:Int) {
-                    numero.text = miModelo.record.value.toString()
-                    textRec.text = "Record"
-                }
-            )
-        )
+        numero.text = miModelo.record.value.toString()
+        textRec.text = "Record"
+
+
+
 
         GlobalScope.launch(Dispatchers.Main) {
             secuencia.clear()

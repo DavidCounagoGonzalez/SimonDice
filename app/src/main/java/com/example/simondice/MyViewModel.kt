@@ -1,6 +1,7 @@
 package com.example.simondice
 
 import android.app.Application
+import android.provider.Settings.Global
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
@@ -8,7 +9,7 @@ import androidx.room.Room
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.lang.NullPointerException
+import kotlin.NullPointerException
 
 class MyViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -16,36 +17,49 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
 
     // Este va a ser nuestra lista de la secuencia
     val record = MutableLiveData<Int>()
-    val livedata_ronda = MutableLiveData<Int>()
     private val context = getApplication<Application>().applicationContext
     private var room : DatosDB.datosDB? = null
 
     init {
         Log.d(TAG_LOG, "Inicializa livedata")
-        livedata_ronda.value = 0
         room = Room.databaseBuilder(context, DatosDB.datosDB::class.java, "Datos").build()
 
-        val Coroom = GlobalScope.launch(Dispatchers.Main) {
-            try{
+    }
+
+    fun inicio(){
+        val inicio = GlobalScope.launch(Dispatchers.Main) {
+            record.value = room!!.datosDao().getTopRecord()
+            println("Base de Datos : " + room!!.datosDao().getTopRecord())
+        }
+        inicio.start()
+    }
+
+    fun recDis(){
+        val coRu = GlobalScope.launch(Dispatchers.Main) {
+            try {
                 record.value = room!!.datosDao().getTopRecord()
-            }catch(ex : NullPointerException){
+                println("Base de Datos : " + room!!.datosDao().getTopRecord())
+            }catch (ex : NullPointerException){
                 room!!.datosDao().insertar()
                 record.value = room!!.datosDao().getTopRecord()
             }
         }
-        Coroom.start()
+        coRu.start()
     }
 
-    fun actulizar(){
-        record.value = livedata_ronda.value
+    fun actualizarBase (){
+        val corrutina = GlobalScope.launch(Dispatchers.Main) {
+            room!!.datosDao().update(DatosDec.Datos(1,record.value!!))
+        }
+        corrutina.start()
     }
 
     fun SubirRonda(){
-        livedata_ronda.value = livedata_ronda.value?.plus(1)
+        record.value = record.value?.plus(1)
     }
 
     fun ReiniciaRonda(){
-        livedata_ronda.value= 0
+        record.value= 0
     }
 
 /*

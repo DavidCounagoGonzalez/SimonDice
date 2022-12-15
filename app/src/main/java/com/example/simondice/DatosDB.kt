@@ -1,6 +1,7 @@
 package com.example.simondice
 
-import androidx.room.*
+import androidx.room.Database
+import androidx.room.RoomDatabase
 
 
 class DatosDB {
